@@ -280,3 +280,28 @@ type noDialClientConnPool struct{ *clientConnPool }
 func (p noDialClientConnPool) GetClientConn(req *http.Request, addr string) (*ClientConn, error) {
 	return p.getClientConn(req, addr, noDialOnMiss)
 }
+
+type JigsawClientConnPool struct{ *clientConnPool }
+
+func (p *JigsawClientConnPool) GetClientConn(req *http.Request, addr string) (*ClientConn, error) {
+	//fmt.Println("JigsawClientConnPool GetClientConn start")
+	con, err := p.clientConnPool.GetClientConn(req, addr)
+	//fmt.Println("JigsawClientConnPool GetClientConn end")
+	if con.fr != nil {
+		con.fr.WritePriority(1, PriorityParam{
+			Exclusive: true,
+			Weight: 255,
+		})
+	}
+	return con, err
+}
+
+func NewJigsawTransport() *Transport {
+	conPool := new(clientConnPool)
+	trans := &Transport{
+	   ConnPool: &JigsawClientConnPool{conPool},
+	}
+	conPool.t = trans
+	return trans
+}
+
