@@ -10,8 +10,8 @@ import (
 	"net"
 	"unsafe"
 
-	"golang.org/x/net/internal/iana"
-	"golang.org/x/net/internal/socket"
+	"github.com/isengardd/net/internal/iana"
+	"github.com/isengardd/net/internal/socket"
 )
 
 func marshalTrafficClass(b []byte, cm *ControlMessage) []byte {

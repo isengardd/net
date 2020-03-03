@@ -1,4 +1,4 @@
-module golang.org/x/net
+module github.com/isengardd/net
 
 go 1.11
 

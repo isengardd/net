@@ -9,8 +9,8 @@ import (
 	"syscall"
 	"unsafe"
 
-	"golang.org/x/net/internal/iana"
-	"golang.org/x/net/internal/socket"
+	"github.com/isengardd/net/internal/iana"
+	"github.com/isengardd/net/internal/socket"
 )
 
 var (
